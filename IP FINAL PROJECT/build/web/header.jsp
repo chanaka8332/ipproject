@@ -4,6 +4,11 @@
     Author     : Shenal Menuka
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -55,12 +60,24 @@
       <ul class="nav navbar-nav navbar-left">
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#fff">MENU<span class="caret"></span></a>
             <ul class="dropdown-menu" style="background-color:#000000">
-          <li><a href="#" style="color:#fff">RICE</a></li>
-          <li><a href="#" style="color:#fff">NOODLES</a></li>
-          <li><a href="#" style="color:#fff">KOTHTHU</a></li>
-          <li><a href="#" style="color:#fff">DRINKS</a></li>
-          <li><a href="#" style="color:#fff">DESERTS</a></li>
-          <li><a href="#" style="color:#fff">APPETIZERS</a></li>
+          
+          <%
+Class.forName("com.mysql.jdbc.Driver");
+String url="jdbc:mysql://localhost/ipproject";
+String username="root";
+String password="";
+String query="select catname from foodcat";
+Connection conn=DriverManager.getConnection(url,username,password);
+Statement stmt=conn.createStatement();
+ResultSet rs=stmt.executeQuery(query);
+while(rs.next())
+{
+%>
+<li><a href="#" style="color:#fff"><%=rs.getString("catname") %></a></li>
+<%
+}
+conn.close();
+%>
         </ul>
       </li>
         <li><a href="homepage.jsp#contactdiv" style="color:#fff">CONTACT US</a></li>
